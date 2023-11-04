@@ -20,6 +20,7 @@ import sys
 from argparse import ArgumentParser, SUPPRESS
 from pathlib import Path
 from time import perf_counter
+import math
 
 import cv2
 import numpy as np
@@ -38,6 +39,8 @@ from images_capture import open_images_capture
 from helpers import resolution, log_latency_per_stage
 
 log.basicConfig(format='[ %(levelname)s ] %(message)s', level=log.DEBUG, stream=sys.stdout)
+
+args = None
 
 ARCHITECTURES = {
     'ae': 'HPE-assosiative-embedding',
@@ -120,7 +123,6 @@ colors = (
         (0, 255, 170), (0, 0, 255), (0, 255, 255), (85, 0, 255),
         (0, 170, 255))
 
-
 def draw_poses(img, poses, point_score_threshold, output_transform, skeleton=default_skeleton, draw_ellipses=False):
     img = output_transform.resize(img)
     if poses.size == 0:
@@ -128,6 +130,9 @@ def draw_poses(img, poses, point_score_threshold, output_transform, skeleton=def
     stick_width = 4
 
     img_limbs = np.copy(img)
+
+    skeleton_angles = [ [] for i in range(19) ]
+    
     for pose in poses:
         points = pose[:, :2].astype(np.int32)
         points = output_transform.scale(points)
@@ -136,9 +141,15 @@ def draw_poses(img, poses, point_score_threshold, output_transform, skeleton=def
         for i, (p, v) in enumerate(zip(points, points_scores)):
             if v > point_score_threshold:
                 cv2.circle(img, tuple(p), 1, colors[i], 2)
+
         # Draw limbs.
+        skeleton_idx = 0
         for i, j in skeleton:
             if points_scores[i] > point_score_threshold and points_scores[j] > point_score_threshold:
+                vec = points[i] - points[j]
+                # append angles(radian) to corresponding skeleton angle set
+                skeleton_angles[skeleton_idx].append(math.atan2(vec[1], vec[0])) 
+                
                 if draw_ellipses:
                     middle = (points[i] + points[j]) // 2
                     vec = points[i] - points[j]
@@ -149,6 +160,28 @@ def draw_poses(img, poses, point_score_threshold, output_transform, skeleton=def
                     cv2.fillConvexPoly(img_limbs, polygon, colors[j])
                 else:
                     cv2.line(img_limbs, tuple(points[i]), tuple(points[j]), color=colors[j], thickness=stick_width)
+            
+            skeleton_idx += 1
+
+    # iterate each skeleton's angle set 
+    for skeleton_idx, angles in enumerate(skeleton_angles):
+            if len(angles) == 0:
+                continue
+
+            # calculate the mean value of skeleton's angle set
+            mean = np.mean(angles)
+            threshold = 0.3 # 18deg
+
+            for angle in angles:
+                # if someone has more angle difference (from mean) than threshold, then says the skeleton are not correct(not dancing similarly!)
+                if abs(angle - mean) >= threshold:
+                    if args.raw_output_message:
+                        print(f'Skeleton part#{skeleton_idx} is not same!')
+                    break
+            
+            if args.raw_output_message:
+                print(f'Skeleton part#{skeleton_idx} are in the same pose.')
+        
     cv2.addWeighted(img, 0.4, img_limbs, 0.6, 0, dst=img)
     return img
 
@@ -159,8 +192,9 @@ def print_raw_results(poses, scores, frame_id):
         pose_str = ' '.join('({:.2f}, {:.2f}, {:.2f})'.format(p[0], p[1], p[2]) for p in pose)
         log.debug('{} | {:.2f}'.format(pose_str, pose_score))
 
-
 def main():
+    global args
+
     args = build_argparser().parse_args()
 
     cap = open_images_capture(args.input, args.loop)
@@ -219,7 +253,8 @@ def main():
 
             presenter.drawGraphs(frame)
             rendering_start_time = perf_counter()
-            frame = draw_poses(frame, poses, args.prob_threshold, output_transform)
+            if args.raw_output_message:
+                frame = draw_poses(frame, poses, args.prob_threshold, output_transform)
             render_metrics.update(rendering_start_time)
             metrics.update(start_time, frame)
             if video_writer.isOpened() and (args.output_limit <= 0 or next_frame_id_to_show <= args.output_limit-1):
@@ -266,7 +301,8 @@ def main():
 
         presenter.drawGraphs(frame)
         rendering_start_time = perf_counter()
-        frame = draw_poses(frame, poses, args.prob_threshold, output_transform)
+        if args.raw_output_message:
+            frame = draw_poses(frame, poses, args.prob_threshold, output_transform)
         render_metrics.update(rendering_start_time)
         metrics.update(start_time, frame)
         if video_writer.isOpened() and (args.output_limit <= 0 or next_frame_id_to_show <= args.output_limit-1):
