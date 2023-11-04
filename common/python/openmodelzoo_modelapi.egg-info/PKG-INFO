@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: openmodelzoo-modelapi
+Version: 0.0.0
+Summary: Model API: model wrappers and pipelines from Open Model Zoo
+Home-page: https://github.com/openvinotoolkit/open_model_zoo/tree/develop/demos/common/python/openvino
+Author: Intel® Corporation
+License: OSI Approved :: Apache Software License
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.7
+Requires-Dist: numpy>=1.16.6
+Requires-Dist: opencv-python
+Requires-Dist: scipy>=1.5.4
+Provides-Extra: ovms
+Requires-Dist: ovmsclient; extra == "ovms"

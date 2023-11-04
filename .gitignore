@@ -1,0 +1,6 @@
+# created by virtualenv automatically
+/intel
+/public
+/lib
+/bin
+pyvenv.cfg

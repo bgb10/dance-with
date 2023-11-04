@@ -1,0 +1,6 @@
+numpy>=1.16.6
+opencv-python
+scipy>=1.5.4
+
+[ovms]
+ovmsclient
