@@ -163,26 +163,33 @@ def draw_poses(img, poses, point_score_threshold, output_transform, skeleton=def
             
             skeleton_idx += 1
 
-    # iterate each skeleton's angle set 
+    # iterate each skeleton's angle set
+    skeleton_wrong_cnt = 0
     for skeleton_idx, angles in enumerate(skeleton_angles):
-            if len(angles) == 0:
+        if len(angles) == 0:
                 continue
 
-            # calculate the mean value of skeleton's angle set
-            mean = np.mean(angles)
-            threshold = 0.3 # 18deg
+        # calculate the mean value of skeleton's angle set
+        mean = np.mean(angles)
+        threshold = 0.5 # 30deg
 
-            for angle in angles:
-                # if someone has more angle difference (from mean) than threshold, then says the skeleton are not correct(not dancing similarly!)
-                if abs(angle - mean) >= threshold:
-                    if args.raw_output_message:
-                        print(f'Skeleton part#{skeleton_idx} is not same!')
-                    break
+        for angle in angles:
+            # if someone has more angle difference (from mean) than threshold, then says the skeleton are not correct(not dancing similarly!)
+            if abs(angle - mean) >= threshold:
+                if args.raw_output_message:
+                    print(f'Skeleton part#{skeleton_idx} is not same!')
+
+                    h, w, _ = img.shape
+                    cv2.putText(img, f'{skeleton_idx}', (100 + w - (100 * (skeleton_wrong_cnt + 1)), int(100)), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 255), 3)
+                    skeleton_wrong_cnt += 1
+                break
             
-            if args.raw_output_message:
-                print(f'Skeleton part#{skeleton_idx} are in the same pose.')
-        
+        if args.raw_output_message:
+            print(f'Skeleton part#{skeleton_idx} are in the same pose.')
+
     cv2.addWeighted(img, 0.4, img_limbs, 0.6, 0, dst=img)
+
+    
     return img
 
 
