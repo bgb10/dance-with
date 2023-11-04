@@ -70,6 +70,10 @@ def build_argparser():
                       help='Optional. Specify the target device to infer on; CPU or GPU is '
                            'acceptable. The demo will look for a suitable plugin for device specified. '
                            'Default value is CPU.')
+    args.add_argument('-ath', '--angle_threshold', default=0.5, type=float, help='Threshold for checking whether skeleton has similar pose. '
+                                                                          'If the angle of one skeleton is more than a threshold away'
+                                                                          'from the average of the angles of all armature, it is diag'
+                                                                          'nosed as an incorrect pose.')
 
     common_model_args = parser.add_argument_group('Common model options')
     common_model_args.add_argument('-t', '--prob_threshold', default=0.1, type=float,
@@ -171,11 +175,11 @@ def draw_poses(img, poses, point_score_threshold, output_transform, skeleton=def
 
         # calculate the mean value of skeleton's angle set
         mean = np.mean(angles)
-        threshold = 0.5 # 30deg
+        angle_threshold = args.angle_threshold # 30deg
 
         for angle in angles:
             # if someone has more angle difference (from mean) than threshold, then says the skeleton are not correct(not dancing similarly!)
-            if abs(angle - mean) >= threshold:
+            if abs(angle - mean) >= angle_threshold:
                 if args.raw_output_message:
                     print(f'Skeleton part#{skeleton_idx} is not same!')
 
