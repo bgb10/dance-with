@@ -1,8 +1,8 @@
-# Human Pose Estimation Python\* Demo
+# Dance-with: Dance with your friends with the right pose!
 
-![example](../human_pose_estimation.gif)
+-- Picture to be added
 
-This demo showcases the work of multi-person 2D pose estimation algorithms. The task is to predict a pose: body skeleton, which consists of a predefined set of keypoints and connections between them, for every person in an input image/video.
+Dance-with corrects your dance posture using multi-person 2D pose estimation Deep Learning model, OpenPose. The task is to predict a pose: body skeleton, which consists of a predefined set of keypoints and connections between them, and tells you which body parts don't fit between multiple people.
 
 ## How It Works
 
