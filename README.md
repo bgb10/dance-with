@@ -13,6 +13,17 @@ People have become more interested in dancing due to the large number of dancing
 - Alerts which body parts have inconsistencies between people in your video
 - Displays estimated poses in the the resulting frame
 
+## Installation
+
+```bash
+# Recommend to turn on python virtualenv before installing the dependencies
+pip install -r requirements.txt
+pip install ./common/python
+pip install -r ./common/python/requirements.txt
+pip install -r ./common/python/requirements_ovms.txt
+omz_downloader --list models.lst
+```
+
 ### Supported Models
 
 * architecture_type=openpose
