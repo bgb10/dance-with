@@ -166,10 +166,11 @@ The demo reports
 You can use these metrics to measure application-level performance.
 
 ## Further Improvement
+- [ ] Finding the actual name of the part that corresponds to each Skeleton
+- [ ] Docker Deployment for easy use
+- [ ] Optimize using OpenVINO optimization technique for low-latency
 
+## References
 
-## See Also
-
-* [Open Model Zoo Demos](../../README.md)
-* [Model Optimizer](https://docs.openvino.ai/2023.0/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html)
-* [Model Downloader](../../../tools/model_tools/README.md)
+* [Open Model Zoo Human Posture Estimation Demo](https://github.com/openvinotoolkit/open_model_zoo/tree/master/demos/human_pose_estimation_demo/python)
+* [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
