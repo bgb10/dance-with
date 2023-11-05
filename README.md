@@ -2,7 +2,7 @@
 
 -- Picture to be added
 
-Dance-with corrects your dance posture using multi-person 2D pose estimation Deep Learning model, OpenPose. The task is to predict a pose: body skeleton, which consists of a predefined set of keypoints and connections between them, and tells you which body parts don't fit between multiple people.
+`Dance-with` corrects your dance posture using multi-person 2D pose estimation Deep Learning model, OpenPose. The task is to predict a pose: body skeleton, which consists of a predefined set of keypoints and connections between them, and tells you which body parts don't fit between multiple people.
 
 ## Motivation
 
@@ -134,10 +134,20 @@ python3 ./dance_with.py \
 
 ## Implementation
 ### OpenPose
+`OpenPose` is the real-time multi-person system to jointly detect human body, hand, facial, and foot keypoints (in total 135 keypoints) on single images.
+
+- Use a pre-trained OpenPose model to find each of the 17 joints and then find the 19 skeletons that connect them.
+- Show each joint and skeleton in OpenCV
 
 ### Intel OpenVINO & Intel Open Model Zoo
+`Intel OpenVINO` is a framework that converts various DL framework models into OpenVINO models to ensure compatibility and optimize inference through quantization, pruning, etc. `Intel Open Model Zoo` includes optimized deep learning models and a set of demos to expedite development of high-performance deep learning inference applications. 
+
+- Convert PyTorch-based OpenPose models to OpenVINO models for use
 
 ### Skeleton Comparison
+- Each person has a Pose, and the Pose has multiple Skeletons.
+- For each person, find the direction (i.e. angle) of the Skeleton's vector and average the angle for each Skeleton part.
+- Detect and notify outliers if the average of the angles deviates from the mean by more than a threshold(argument value `-ath`, default is 0.5rad).
 
 ## Demo
 
