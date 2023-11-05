@@ -4,6 +4,24 @@
 
 `Dance-with` corrects your dance posture using multi-person 2D pose estimation Deep Learning model, OpenPose. The task is to predict a pose: body skeleton, which consists of a predefined set of keypoints and connections between them, and tells you which body parts don't fit between multiple people.
 
+Table of Contents
+=================
+
+* [Dance-with: Dance with your friends with the right pose!](#dance-with-dance-with-your-friends-with-the-right-pose)
+   * [Motivation](#motivation)
+   * [Features](#features)
+   * [Installation](#installation)
+   * [Running](#running)
+      * [Supported Models](#supported-models)
+      * [Example](#example)
+   * [Implementation](#implementation)
+      * [OpenPose](#openpose)
+      * [Intel OpenVINO &amp; Intel Open Model Zoo](#intel-openvino--intel-open-model-zoo)
+      * [Skeleton Comparison](#skeleton-comparison)
+   * [Demo](#demo)
+   * [Further Improvement](#further-improvement)
+   * [References](#references)
+
 ## Motivation
 
 People have become more interested in dancing due to the large number of dancing videos on Instagram. People often take videos of themselves dancing with their friends, but people who are not good dancers are not sure how much their posture is wrong. Dance-with analyzes the posture of the people in the video and shows them which body part are not same between other people, so allows you to dance in sync with each other.
