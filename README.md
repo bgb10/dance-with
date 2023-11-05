@@ -2,7 +2,7 @@
 
 -- Picture to be added
 
-`Dance-with` corrects your dance posture using multi-person 2D pose estimation Deep Learning model, OpenPose. The task is to predict a pose: body skeleton, which consists of a predefined set of keypoints and connections between them, and tells you which body parts don't fit between multiple people.
+`Dance-with` corrects your dance posture using multi-person OpenPose, 2D pose estimation Deep Learning model. This model runs on Intel OpenVino, an open-source toolkit for optimizing and deploying deep learning models. The task is to predict a pose: body skeleton, which consists of a predefined set of keypoints and connections between them, and tells you which body parts don't fit between multiple people.
 
 Table of Contents
 =================
