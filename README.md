@@ -150,6 +150,7 @@ python3 ./dance_with.py \
   -m ./intel/human-pose-estimation-0005/FP16/human-pose-estimation-0005.xml \
   -at ae
   -r
+  -ath 0.2
 ```
 
 ## Implementation
@@ -182,8 +183,9 @@ The demo reports
   * **Inference** — infering input data (images) and getting a result.
   * **Postrocessing** — preparation inference result for output.
   * **Rendering** — generating output image.
+* Reports mismatched body part positions in upper right corner
 
-You can use these metrics to measure application-level performance.
+<img width="232" alt="image" src="https://github.com/bgb10/dance-with/assets/25452313/25368045-2250-47ee-947c-9abf9f924861">
 
 ## Further Improvement
 - [ ] Finding the actual name of the part that corresponds to each Skeleton
