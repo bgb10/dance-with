@@ -31,6 +31,8 @@ People have become more interested in dancing due to the large number of dancing
 - Alerts which body parts have inconsistencies between people in your video
 - Displays estimated poses in the the resulting frame
 
+> Due to time constraints, each body part was replaced with a **number(0-16)**
+
 ## Installation
 
 ```bash
