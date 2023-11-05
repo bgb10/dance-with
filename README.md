@@ -1,6 +1,6 @@
 # Dance-with: Dance with your friends with the right pose!
 
--- Picture to be added
+![dance_with_low](https://github.com/bgb10/dance-with/assets/25452313/6eb9c97d-439d-4f2f-b757-a1394775b690)
 
 `Dance-with` corrects your dance posture using multi-person OpenPose, 2D pose estimation Deep Learning model. This model runs on Intel OpenVino, an open-source toolkit for optimizing and deploying deep learning models. The task is to predict a pose: body skeleton, which consists of a predefined set of keypoints and connections between them, and tells you which body parts don't fit between multiple people.
 
