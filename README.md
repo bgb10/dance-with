@@ -8,6 +8,11 @@ Dance-with corrects your dance posture using multi-person 2D pose estimation Dee
 
 People have become more interested in dancing due to the large number of dancing videos on Instagram. People often take videos of themselves dancing with their friends, but people who are not good dancers are not sure how much their posture is wrong. Dance-with analyzes the posture of the people in the video and shows them which body part are not same between other people, so allows you to dance in sync with each other.
 
+## Features
+
+- Alerts which body parts have inconsistencies between people in your video
+- Displays estimated poses in the the resulting frame
+
 ### Supported Models
 
 * architecture_type=openpose
